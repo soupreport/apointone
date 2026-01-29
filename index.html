@@ -20,17 +20,25 @@
       padding: 0 20px;
       font-size: 18px;
       line-height: 1.6;
+      white-space: pre-wrap;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <p>
-      This is where your text goes. It can be one paragraph or many sentences.
-      There are no posts, no navigation, no archive — just this block of text,
-      exactly as written.
-    </p>
+    <pre id="content">Loading…</pre>
   </div>
+
+  <script>
+    fetch("content.txt")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("content").textContent = text;
+      })
+      .catch(err => {
+        document.getElementById("content").textContent = "Unable to load text.";
+      });
+  </script>
 </body>
 </html>
