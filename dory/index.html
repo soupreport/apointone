@@ -1,16 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>dory</title>
-</head>
-<body>
-
 <h1>dory</h1>
 
-<p>This is the dory page.</p>
+<div id="content">Loading…</div>
+
+<script>
+fetch("content.txt")
+  .then(r => r.text())
+  .then(t => {
+    document.getElementById("content").textContent = t;
+  });
+</script>
 
 <p><a href="/">← Back to home</a></p>
 
-</body>
-</html>
+<style>
+#content {
+  white-space: pre-wrap;
+}
+</style>
