@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<a href="/bestthings/">Best things</a>
+
+  <head>
+  <meta charset="UTF-8">
+  <title>Your Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+body {
+  margin: 0;
+  padding: 0;
+  background: white;
+  color: #111;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.container {
+  max-width: 720px;
+  margin: 80px auto;
+  padding: 0 20px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* THIS is the important part */
+#content {
+  white-space: pre-wrap;        /* preserve line breaks, allow wrapping */
+  word-break: break-word;       /* break long words */
+  overflow-wrap: anywhere;      /* force-wrap URLs / citations */
+  max-width: 100%;
+  overflow-x: hidden;
+}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <pre id="content">Loading…</pre>
+  </div>
+<style>
+  #content {
+    font-family: "Libre Baskerville", serif;
+  }
+</style>
+
+
+<script>
+fetch("content.txt")
+  .then(r => r.text())
+  .then(t => {
+    document.getElementById("content").textContent = t;
+  });
+</script>
+
+<p><a href="/">← Back to home</a></p>
+
+ 
