@@ -39,26 +39,7 @@ body {
   <div class="container">
     <a href="voicebestthings.m4a">Listen to the recording</a>
     <pre id="content">Loading…</pre>
-     <audio id="voice">
-    <source src="voicebestthings.m4a" type="audio/mp4">
-  </audio>
-</div>
-
-<style>
-  .dim {
-    opacity: 0.4;
-    transition: opacity 0.3s ease;
-  }
-</style>
-
-<script>
-  const audio = document.getElementById("voice");
-  const content = document.getElementById("content");
-
-  audio.onplay = () => content.classList.add("dim");
-  audio.onpause = () => content.classList.remove("dim");
-  audio.onended = () => content.classList.remove("dim");
-</script>
+      
   </div>
 <style>
   #content {
