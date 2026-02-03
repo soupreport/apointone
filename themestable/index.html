@@ -1,3 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <title>Themes Table</title>
+  
+  <style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;      /* critical */
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    vertical-align: top;
+    text-align: left;
+
+    white-space: normal;      /* allow wrapping */
+    word-wrap: break-word;    /* break long words */
+  }
+
+  th {
+    font-weight: 600;
+    background: #f7f7f7;
+  }
+</style>
+
+</head>
+
+<body>
 <table id="ThemesTable"></table>
 <script>
 fetch("content.txt")
@@ -22,3 +57,4 @@ fetch("content.txt")
     });
   });
 </script>
+</body>
