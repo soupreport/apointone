@@ -1,5 +1,5 @@
  
-Title|Author|Format|Year|Themes
+Source|Author|Format|Year|Themes
 Power of Myth|Joseph Campbell|Non-Fiction Book|1988|metaphor; religion; comparative study
 Letting Go|David R. Hawkins|Non-Fiction Book|2012|anger; levels of emotion; ego; survival
 Why Buddhism is True|Robert Wright|Non-Fiction Book|2017|buddhism; evolution; ego; comparative study
