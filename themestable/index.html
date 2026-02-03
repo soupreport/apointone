@@ -1,0 +1,24 @@
+<table id="ThemesTable"></table>
+<script>
+fetch("content.txt")
+  .then(res => res.text())
+  .then(text => {
+    const table = document.getElementById("ThemesTable");
+    const lines = text.trim().split("\n");
+
+    lines.forEach((line, rowIndex) => {
+      const tr = document.createElement("tr");
+      const cells = line.split("|");
+
+      cells.forEach((cell, colIndex) => {
+        const el = document.createElement(
+          rowIndex === 0 ? "th" : colIndex === 0 ? "th" : "td"
+        );
+        el.textContent = cell.trim();
+        tr.appendChild(el);
+      });
+
+      table.appendChild(tr);
+    });
+  });
+</script>
