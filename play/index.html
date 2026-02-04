@@ -1,0 +1,80 @@
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    vertical-align: top;
+    text-align: left;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  th {
+    background: #f7f7f7;
+    font-weight: 600;
+  }
+  /* Optional: make merged rows stand out a bit */
+  .merged {
+    background: #fafafa;
+    font-weight: 600;
+  }
+</style>
+
+<table>
+  <tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Column 3</th>
+  </tr>
+
+  <tr>
+    <td>Row 1, Col 1</td>
+    <td>Row 1, Col 2</td>
+    <td>Row 1, Col 3</td>
+  </tr>
+
+  <tr>
+    <td>Row 2, Col 1</td>
+    <td>Row 2, Col 2</td>
+    <td>Row 2, Col 3</td>
+  </tr>
+
+  <tr>
+    <td>Row 3, Col 1</td>
+    <td>Row 3, Col 2</td>
+    <td>Row 3, Col 3</td>
+  </tr>
+
+  <tr>
+    <td>Row 4, Col 1</td>
+    <td>Row 4, Col 2</td>
+    <td>Row 4, Col 3</td>
+  </tr>
+
+  <tr>
+    <td>Row 5, Col 1</td>
+    <td>Row 5, Col 2</td>
+    <td>Row 5, Col 3</td>
+  </tr>
+
+  <!-- Row 6 merged across all 3 columns -->
+  <tr>
+    <td class="merged" colspan="3">Row 6 (merged across all columns)</td>
+  </tr>
+
+  <tr>
+    <td>Row 7, Col 1</td>
+    <td>Row 7, Col 2</td>
+    <td>Row 7, Col 3</td>
+  </tr>
+
+  <!-- Row 8 merged across all 3 columns -->
+  <tr>
+    <td class="merged" colspan="3">Row 8 (merged across all columns)</td>
+  </tr>
+</table>
