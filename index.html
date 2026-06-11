@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Page</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      width: 100%;
+      max-width: 900px;
+      min-height: 600px;
+      border: 1px solid #e0ddd5;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* ── Shared quad styles ── */
+    .quad {
+      border: 1px solid #e0ddd5;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+      overflow: hidden;
+      position: relative;
+    }
+    .quad:hover { background: #faf9f6; }
+
+    /* ── Soup Report: live iframe ── */
+    .quad-soup {
+      padding: 0;
+      cursor: default;
+    }
+    .quad-soup iframe {
+      width: 200%;        /* scale down a desktop site to fit half the grid */
+      height: 200%;
+      border: none;
+      transform: scale(0.5);
+      transform-origin: top left;
+      pointer-events: none; /* prevent scroll-jacking inside the iframe */
+    }
+    .quad-soup .soup-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 1.25rem;
+      background: linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.85) 100%);
+    }
+    .quad-soup .soup-overlay a {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a5cad;
+      background: #eef4fd;
+      padding: 5px 14px;
+      border-radius: 99px;
+      text-decoration: none;
+    }
+
+    /* ── For-sale quad ── */
+    .quad-sale {
+      padding: 2rem;
+    }
+    .quad-sale .quad-img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      border: 1px solid #e0ddd5;
+    }
+
+    /* ── Amazon book quad ── */
+    .quad-book {
+      padding: 2rem;
+    }
+
+    /* ── Writing quad ── */
+    .quad-writing {
+      padding: 2rem;
+    }
+    .quad-writing blockquote {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #333;
+      font-style: italic;
+      max-width: 260px;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Shared label / title / pill ── */
+    .quad-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 0.35rem;
+    }
+    .quad-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.4rem;
+    }
+    .quad-sub {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+      max-width: 240px;
+    }
+    .pill {
+      display: inline-block;
+      margin-top: 0.9rem;
+      padding: 5px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 500;
+      background: #eef4fd;
+      color: #1a5cad;
+      text-decoration: none;
+    }
+    .pill:hover { background: #d8e9fb; }
+
+    @media (max-width: 560px) {
+      .grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, auto);
+      }
+      .quad-soup iframe { width: 300%; height: 300%; transform: scale(0.333); }
+      .quad { min-height: 260px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="grid">
+
+  <!-- ① Soup Report — live embedded -->
+  <div class="quad quad-soup" style="padding:1.5rem; align-items:flex-start; text-align:left; justify-content:flex-start; cursor:default;">
+    <div class="quad-label" style="margin-bottom:0.75rem;">Soup Report</div>
+    <div id="soup-widget" style="font-size:15px; line-height:1.8; color:#1a1a1a;">
+      The soup today, <span id="date"></span>, is <span id="soupDisplay"></span><span id="restaurantDisplay"></span>
+      <div id="mainInputs">
+        <input id="soupInput" placeholder="soup?" style="border:1px solid #ccc; border-radius:6px; padding:3px 8px; font-size:14px; width:90px;"> at
+        <input id="restaurantInput" placeholder="where?" style="border:1px solid #ccc; border-radius:6px; padding:3px 8px; font-size:14px; width:90px;">
+      </div>
+      <span id="mainOrder" style="display:none">
+        <a href="https://www.doordash.com" target="_blank"><button style="margin-left:6px; padding:3px 10px; border-radius:6px; border:1px solid #ccc; cursor:pointer; font-size:13px;">Order</button></a>
+      </span>
+      <div id="maybeContainer" style="display:none; margin-top:0.5rem;">
+        <button id="maybeBtn" style="background:none; border:none; color:#1a5cad; cursor:pointer; font-size:14px; padding:0;">or maybe it's</button>
+      </div>
+      <div id="modal" style="display:none; color:green; margin-top:0.5rem;">Thank you</div>
+      <div id="alternatives"></div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+      import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyC3C35LCTnyc7j1TyZkl0hwW4Bnnlazv5s",
+        authDomain: "soup-report-with-claude.firebaseapp.com",
+        projectId: "soup-report-with-claude",
+        storageBucket: "soup-report-with-claude.firebasestorage.app",
+        messagingSenderId: "798636211055",
+        appId: "1:798636211055:web:f5cd6f84451a5efc98c69a",
+        measurementId: "G-Q704Q3Z7HR"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      const today = new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'});
+      document.getElementById('date').textContent = today;
+
+      const docRef = doc(db, 'soups', today);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        document.getElementById('soupDisplay').textContent = data.soup;
+        document.getElementById('restaurantDisplay').textContent = data.restaurant ? ' at ' + data.restaurant + '.' : '.';
+        document.getElementById('mainInputs').style.display = 'none';
+        document.getElementById('mainOrder').style.display = 'inline';
+        document.getElementById('maybeContainer').style.display = 'inline';
+        if (data.alternatives) {
+          data.alternatives.forEach(alt => {
+            const altText = alt.restaurant ? alt.soup + ' at ' + alt.restaurant + '.' : alt.soup + '.';
+            document.getElementById('alternatives').innerHTML += '<br>or maybe it\'s ' + altText + ' <a href="https://www.doordash.com" target="_blank"><button style="padding:2px 8px;border-radius:6px;border:1px solid #ccc;cursor:pointer;font-size:13px;">Order</button></a>';
+          });
+        }
+      }
+
+      document.getElementById('soupInput').addEventListener('keypress', async function(e) {
+        if(e.key === 'Enter') submitMain();
+      });
+      document.getElementById('restaurantInput').addEventListener('keypress', async function(e) {
+        if(e.key === 'Enter') submitMain();
+      });
+
+      async function submitMain() {
+        const soup = document.getElementById('soupInput').value;
+        const restaurant = document.getElementById('restaurantInput').value;
+        if(soup) {
+          await setDoc(doc(db, 'soups', today), { soup, restaurant: restaurant || '', alternatives: [] });
+          document.getElementById('soupDisplay').textContent = soup;
+          document.getElementById('restaurantDisplay').textContent = restaurant ? ' at ' + restaurant + '.' : '.';
+          document.getElementById('mainInputs').style.display = 'none';
+          document.getElementById('mainOrder').style.display = 'inline';
+          document.getElementById('maybeContainer').style.display = 'inline';
+          document.getElementById('modal').style.display = 'block';
+          setTimeout(() => document.getElementById('modal').style.display = 'none', 2000);
+        }
+      }
+
+      document.getElementById('maybeBtn').addEventListener('click', function() {
+        const newLine = document.createElement('div');
+        newLine.innerHTML = '<br>or maybe it\'s <input class="altSoup" placeholder="soup?" style="border:1px solid #ccc;border-radius:6px;padding:3px 8px;font-size:14px;width:80px;"> at <input class="altRestaurant" placeholder="where?" style="border:1px solid #ccc;border-radius:6px;padding:3px 8px;font-size:14px;width:80px;">';
+        document.getElementById('alternatives').appendChild(newLine);
+        newLine.querySelectorAll('.altSoup, .altRestaurant').forEach(input => {
+          input.addEventListener('keypress', async function(e) {
+            if(e.key === 'Enter') {
+              const soup = newLine.querySelector('.altSoup').value;
+              const restaurant = newLine.querySelector('.altRestaurant').value;
+              if(soup) {
+                await updateDoc(doc(db, 'soups', today), { alternatives: arrayUnion({soup, restaurant: restaurant || ''}) });
+                const altText = restaurant ? soup + ' at ' + restaurant + '.' : soup + '.';
+                newLine.innerHTML = '<br>or maybe it\'s ' + altText + ' <a href="https://www.doordash.com" target="_blank"><button style="padding:2px 8px;border-radius:6px;border:1px solid #ccc;cursor:pointer;font-size:13px;">Order</button></a>';
+                document.getElementById('modal').style.display = 'block';
+                setTimeout(() => document.getElementById('modal').style.display = 'none', 2000);
+                document.body.appendChild(document.getElementById('maybeContainer'));
+              }
+            }
+          });
+        });
+      });
+    </script>
+  </div>
+
+  <!-- ② Item for sale — Bridgestone Blizzak tires on OfferUp -->
+  <a class="quad quad-sale" href="https://offerup.com/item/detail/843f8abc-467c-341e-840c-fa91c22ea6b6" target="_blank" rel="noopener">
+    <img
+      class="quad-img"
+      src="https://images.offerup.com/N6-F9lvrylIHBFIpeTQU3_k4OU8=/1440x1920/3fd7/3fd76543ea6d418a822f96c7401723da.jpg"
+      alt="Bridgestone Blizzak winter tires"
+    />
+    <div class="quad-label">For Sale · $500</div>
+    <div class="quad-title">Bridgestone Blizzak Winter Tires</div>
+    <div class="quad-sub">Almost new — used just a month on a Porsche Cayenne. Miami, FL.</div>
+    <span class="pill">↗ View on OfferUp</span>
+  </a>
+
+  <!-- ③ Amazon book — ASIN 1478211288, update title below -->
+  <a class="quad quad-book" href="https://www.amazon.com/dp/1478211288" target="_blank" rel="noopener">
+    <img
+      src="Evacover.jpg"
+      alt="Los animales de Eva book cover"
+      style="width:110px; height:auto; border-radius:8px; margin-bottom:1rem; border:1px solid #e0ddd5; box-shadow:2px 3px 8px rgba(0,0,0,0.12);"
+    />
+    <div class="quad-label">Book</div>
+    <div class="quad-title">Los animales de Eva</div>
+    <div class="quad-sub">A children's story in Spanish — a sweet bilingual gift for little readers.</div>
+    <span class="pill">↗ Available on Amazon</span>
+  </a>
+
+  <!-- ④ Writing from apointone.com/why -->
+  <a class="quad quad-writing" href="https://www.apointone.com" target="_blank" rel="noopener">
+    <div style="font-size:2rem; margin-bottom:0.75rem;">✍️</div>
+    <div class="quad-label">Writing</div>
+    <div class="quad-title">A Point One</div>
+    <blockquote>
+      "This is not a law review article. This is a rant."
+    </blockquote>
+    <span class="pill">↗ Read on apointone.com</span>
+  </a>
+
+</div>
+
+</body>
+</html>
